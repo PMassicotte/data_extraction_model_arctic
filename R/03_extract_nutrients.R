@@ -12,8 +12,8 @@ extract <- function(raster_path, station) {
     as_tibble()
 }
 
-batch_extract <- function(stations) {
-  raster_files <- dir_ls(path("data", "raw", "copernicus")) |>
+batch_extract <- function(stations, downloaded_files) {
+  raster_files <- downloaded_files |>
     enframe(name = NULL, value = "path") |>
     mutate(date = str_extract(path, "\\d{4}-\\d{2}-\\d{2}"), .before = 1L) |>
     mutate(date = ymd(date)) |>

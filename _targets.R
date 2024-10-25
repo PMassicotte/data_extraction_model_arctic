@@ -25,13 +25,18 @@ plan(multicore(workers = 12L))
 
 tar_source()
 
-tar_option_set(format = tar_format_nanoparquet())
+tar_option_set(
+  format = tar_format_nanoparquet()
+)
 
 list(
   tar_file(station_file, fs::path("data", "raw", "stations_huiwen.xlsx")),
   tar_target(stations, clean_stations(station_file)),
-  tar_target(datasets, batch_download(stations)),
-  tar_target(extracted_data, batch_extract(stations)),
+  tar_file(
+    downloaded_files,
+    batch_download(stations, fs::path("data", "raw", "copernicus"))
+  ),
+  tar_target(extracted_data, batch_extract(stations, downloaded_files)),
   tar_file(
     extracted_data_file,
     write_csv_file(

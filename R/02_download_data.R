@@ -25,7 +25,7 @@ check_copernicusmarine <- function() {
 }
 
 
-build_cli <- function(dataset_id, date, bbox, out_dir) {
+build_cli <- function(dataset_id, date, bbox, download_dir) {
   variable <- variables[[dataset_id]]
   if (is.null(variable)) cli_abort("Unknown dataset {dataset_id}")
 
@@ -43,7 +43,7 @@ build_cli <- function(dataset_id, date, bbox, out_dir) {
     "copernicusmarine subset ",
     "--dataset-id {dataset_id} ",
     "{variable_string} ",
-    "-o {out_dir} ",
+    "-o {download_dir} ",
     "--service arco-geo-series ",
     "--dataset-part='default' ",
     "--force-download ",
@@ -63,18 +63,19 @@ build_cli <- function(dataset_id, date, bbox, out_dir) {
 }
 
 # Build the cli command for each image to download
-download <- function(dataset_id, date, bbox, out_dir) {
-  command <- build_cli(dataset_id, date, bbox, out_dir)
+download <- function(dataset_id, date, bbox, download_dir) {
+  command <- build_cli(dataset_id, date, bbox, download_dir)
   system(command, intern = TRUE)
 }
 
-batch_download <- function(stations) {
+batch_download <- function(stations, download_dir) {
   check_copernicusmarine()
 
-  out_dir <- path("data", "raw", "copernicus")
-  dir_delete(out_dir)
-  dir_create(out_dir)
+  if (dir_exists(download_dir)) {
+    dir_delete(download_dir)
+  }
 
+  dir_create(download_dir)
 
   stations_vec <- stations |>
     vect(geom = c("longitude", "latitude"), crs = "EPSG:4326")
@@ -95,10 +96,10 @@ batch_download <- function(stations) {
     crossing(dataset)
 
   future_pwalk(
-    list(res[["dataset"]], res[["sampling_date"]], list(bbox), out_dir),
+    list(res[["dataset"]], res[["sampling_date"]], list(bbox), download_dir),
     download
   )
 
-  res |>
-    unnest(data)
+  # Return a list of downloaded files
+  fs::dir_ls(download_dir)
 }
