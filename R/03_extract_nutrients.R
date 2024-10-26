@@ -29,10 +29,18 @@ batch_extract <- function(stations, downloaded_files) {
     nest(.by = c(sampling_date, path), .key = "data") |>
     as_tibble()
 
-  res <- stations_nested |>
-    mutate(raster_data = map2(path, data, extract, .progress = TRUE)) |>
-    unnest(c(data, raster_data)) |>
-    select(-path)
+  extracted_data <- stations_nested |>
+    mutate(raster_data = map2(path, data, extract, .progress = TRUE))
+
+  res <- extracted_data |>
+    mutate(
+      data_type = str_extract(path, "cmems.*P1D-m"),
+      .after = sampling_date
+    ) |>
+    select(-path) |>
+    pivot_wider(names_from = data_type, values_from = raster_data) |>
+    select(1:4) |>
+    unnest(everything(), names_sep = "_")
 
   res
 }
