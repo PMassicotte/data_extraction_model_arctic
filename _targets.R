@@ -30,7 +30,10 @@ tar_option_set(
 )
 
 list(
-  tar_file(station_file, fs::path("data", "raw", "stations_huiwen.xlsx")),
+  tar_file(
+    station_file,
+    fs::path("data", "raw", "stations_huiwen_updated.xlsx")
+  ),
   tar_target(stations, clean_stations(station_file)),
   tar_file(
     downloaded_files,
