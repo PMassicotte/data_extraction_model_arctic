@@ -39,7 +39,7 @@ batch_extract <- function(stations, downloaded_files) {
     ) |>
     select(-path) |>
     pivot_wider(names_from = data_type, values_from = raster_data) |>
-    select(1:5) |>
+    select(sampling_date, data, contains("cmems")) |>
     unnest(everything(), names_sep = "_")
 
   res
