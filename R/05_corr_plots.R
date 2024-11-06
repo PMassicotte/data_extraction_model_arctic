@@ -37,6 +37,11 @@ make_corr_plots <- function(extracted_data, file_plot) {
     geom_smooth(method = "lm") +
     scale_x_log10() +
     annotation_logticks(sides = "b", linewidth = 0.2) +
+    stat_correlation(
+      mapping = use_label("R", "t", "P", "n"),
+      label.x = "right",
+      label.y = "bottom"
+    ) +
     labs(
       x = parse(text = "Sinking~mole~flux~POC~(mol~m^{-2}~d^{-1})"),
       y = parse(text = "Plastic~concentration~(ng~L^{ -1 })")
@@ -47,6 +52,11 @@ make_corr_plots <- function(extracted_data, file_plot) {
     geom_point() +
     geom_smooth(method = "lm") +
     scale_x_log10() +
+    stat_correlation(
+      mapping = use_label("R", "t", "P", "n"),
+      label.x = "right",
+      label.y = "bottom"
+    ) +
     annotation_logticks(sides = "b", linewidth = 0.2) +
     labs(
       x = parse(text = "Net~primary~production~(mg~m^{-3}~d^{-1})"),
@@ -58,6 +68,11 @@ make_corr_plots <- function(extracted_data, file_plot) {
     geom_point() +
     geom_smooth(method = "lm") +
     scale_x_log10() +
+    stat_correlation(
+      mapping = use_label("R", "t", "P", "n"),
+      label.x = "right",
+      label.y = "bottom"
+    ) +
     annotation_logticks(sides = "b", linewidth = 0.2) +
     labs(
       x = parse(text = "Mole~concentration~phytoplankton~(mmol~m^{-3})"),
@@ -69,6 +84,11 @@ make_corr_plots <- function(extracted_data, file_plot) {
     geom_point() +
     geom_smooth(method = "lm") +
     scale_x_log10() +
+    stat_correlation(
+      mapping = use_label("R", "t", "P", "n"),
+      label.x = "right",
+      label.y = "bottom"
+    ) +
     annotation_logticks(sides = "b", linewidth = 0.2) +
     labs(
       x = parse(text = "Mole~concentration~zooplankton~(mmol~m^{-3})"),

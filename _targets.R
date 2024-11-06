@@ -13,6 +13,7 @@ library(cli)
 library(tidymodels)
 library(corrr)
 library(patchwork)
+library(ggpmisc)
 
 theme_set(theme_poppins(base_size = 10L))
 theme_update(
