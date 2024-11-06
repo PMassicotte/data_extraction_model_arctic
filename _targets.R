@@ -10,6 +10,9 @@ library(tidyterra)
 library(fs)
 library(furrr)
 library(cli)
+library(tidymodels)
+library(corrr)
+library(patchwork)
 
 theme_set(theme_poppins(base_size = 10L))
 theme_update(
@@ -46,5 +49,13 @@ list(
       extracted_data,
       fs::path("data", "clean", "extracted_nutrients.csv")
     )
+  ),
+  tar_target(
+    corr_plot,
+    make_corr_plots(
+      extracted_data,
+      fs::path("graphs", "correlations_plots.pdf")
+    ),
+    format = "rds"
   )
 )
