@@ -1,19 +1,48 @@
-> Hi Philippe,
->
-> I'm Huiwen the postdoc with Julien, I'm so happy that you can help us with
-> this issue. The attachment is the information of stations that we are
-> interested in, and here is the link of model we found: Arctic Ocean
-> Biogeochemistry Analysis and Forecast | Copernicus Marine Service
->
-> The ppt is the map visualized from the model above with python. We think the
-> plastic concentartions may have some corelation with that of nutrients. This
-> is why we want to extract data for specific coordinate/our stations for
-> further analysis. Could you help us with that? Thank you in advance!!
->
-> Huiwen
->
-> Huiwen Cai (PhD)
->
-> Postdoctoral Fellow
+[![DOI](https://zenodo.org/badge/891102138.svg)](https://doi.org/10.5281/zenodo.14187756) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-[Data source](https://data.marine.copernicus.eu/product/ARCTIC_ANALYSISFORECAST_BGC_002_004/download)
+## Overview
+
+This project is designed to extract and process data from the Arctic Analysis Forecast BGC dataset. The pipeline includes data extraction, transformation, and loading (ETL) processes to prepare the data for analysis.
+
+## Prerequisites
+
+- R (version >= 4.0)
+
+- `copernicusmarine` command-line tool installed and in the path
+
+  - Installation instructions can be found [here](https://pypi.org/project/copernicusmarine/)
+
+- Ensure you have the necessary environment variables set:
+  - `COPERNICUS_USER`
+  - `COPERNICUS_PWD`
+
+## Installation
+
+This repository contains tools and scripts to extract data from the Arctic Ocean Biogeochemistry Analysis and Forecast provided by the Copernicus Marine Service.
+
+To set up the project environment, run the following commands:
+
+```bash
+# Clone the repository
+git clone git@github.com:PMassicotte/data_extraction_model_arctic.git
+
+# Navigate to the project directory
+cd data_extraction_model_arctic
+
+# Install dependencies using renv
+R -e 'renv::restore()'
+```
+
+## Usage
+
+You can run the analysis by running the following command:
+
+```bash
+R -e 'targets::tar_make()'
+```
+
+This will generate the necessary plots and analysis outputs.
+
+## Acknowledgements
+
+- [Copernicus Marine Environment Monitoring Service](https://marine.copernicus.eu/) for providing the data.
