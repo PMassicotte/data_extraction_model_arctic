@@ -14,6 +14,7 @@ library(tidymodels)
 library(corrr)
 library(patchwork)
 library(ggpmisc)
+library(factoextra)
 
 theme_set(theme_poppins(base_size = 10L))
 theme_update(
@@ -58,5 +59,10 @@ list(
       fs::path("graphs", "correlations_plots.pdf")
     ),
     format = "rds"
-  )
+  ),
+  tar_file(
+    file_data_pca,
+    fs::path("data", "raw", "Environment variables_2022&2023_withcluster.csv")
+  ),
+  tar_target(pca, make_pca(file_data_pca), format = "rds")
 )
