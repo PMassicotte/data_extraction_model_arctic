@@ -15,8 +15,10 @@ library(corrr)
 library(patchwork)
 library(ggpmisc)
 library(factoextra)
+library(ggrepel)
+library(ggnewscale)
 
-theme_set(theme_poppins(base_size = 10L))
+theme_set(theme_poppins(base_size = 10L, base_family = "Arial"))
 theme_update(
   panel.border = element_blank(),
   axis.ticks = element_blank(),
@@ -61,8 +63,10 @@ list(
     format = "rds"
   ),
   tar_file(
-    file_data_pca,
+    file_pca,
     fs::path("data", "raw", "Environment variables_2022&2023_withcluster.csv")
   ),
-  tar_target(pca, make_pca(file_data_pca), format = "rds")
+  tar_target(pca_df, clean_pca_data(file_pca)),
+  tar_target(pca, make_pca(pca_df), format = "rds"),
+  tar_target(pca_plot, make_pca_plot(pca, pca_df, file_pca), format = "rds")
 )
