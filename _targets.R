@@ -68,5 +68,11 @@ list(
   ),
   tar_target(pca_df, clean_pca_data(file_pca)),
   tar_target(pca, make_pca(pca_df), format = "rds"),
+  tar_target(
+    env_clusters,
+    env_variables_clustering(pca),
+    format = "rds"
+  ),
+  tar_target(sites_clusters, sites_clustering(pca), format = "rds"),
   tar_target(pca_plot, make_pca_plot(pca, pca_df, file_pca), format = "rds")
 )
